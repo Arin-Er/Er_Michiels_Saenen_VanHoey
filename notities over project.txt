@@ -1,0 +1,14 @@
+vragen:
+    -zie comment category (subcategory)
+	-score relatie met question maar is pas voor later
+	-hebben we een edit methode nodig vr question en category want ik zie dit nergens in story uitleg
+
+
+
+
+
+
+why facade en strategy -> les
+
+
+kleine uitleg van strategy da ik heb gedaan ( arin ) staat in question klasse vanboven
