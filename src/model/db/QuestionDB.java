@@ -6,10 +6,18 @@ import java.util.ArrayList;
 
 public class QuestionDB {
     //gelijkaardig aan CategoryDB
+    private static QuestionDB single_instance = null;
+
     private ArrayList<Question> questions;
 
-    public QuestionDB (){
+    private QuestionDB (){
         questions = new ArrayList<>();
+    }
+
+    public static QuestionDB getInstance(){
+        if(single_instance == null)
+            single_instance = new QuestionDB();
+        return single_instance;
     }
 
     public void addQuestion(Question question){

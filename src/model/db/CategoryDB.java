@@ -5,10 +5,20 @@ import model.domain.Category;
 import java.util.ArrayList;
 
 public class CategoryDB {
+    private static CategoryDB single_instance = null;
     private ArrayList<Category> categories;
-    public CategoryDB(){
+
+    private CategoryDB(){
         this.categories = new ArrayList<Category>();
     }
+
+    public static CategoryDB getInstance(){
+        if(single_instance == null)
+            single_instance = new CategoryDB();
+        return single_instance;
+    }
+
+
     public void addCategory(Category c){
         //fouten -> als het null is en als die al in de lijst is ( category gelijk wanneer titel hetzelfde is? momenteel op deze manier geimplementeerd)
         if(c == null){

@@ -77,7 +77,7 @@ public class Question {
     }
 
     public void setAnswers(ArrayList<String> answers){
-        if(answers == null || answers.isEmpty() || answers.size() <= 2){
+        if(answers == null || answers.isEmpty() || answers.size() < 2){
             throw new DomainException("Every question needs at least 2 possible answers");
         }
         this.answers = answers;
