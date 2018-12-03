@@ -55,6 +55,10 @@ public class QuestionDBlocal implements QuestionDB{
         }
     }
 
+    @Override
+    public int getSizeQuestionDB() {
+        return 0;
+    }
 
 
     public int getSizeQuestion(){
