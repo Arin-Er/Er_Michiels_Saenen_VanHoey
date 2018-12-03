@@ -31,7 +31,7 @@ public class MessagePane extends GridPane {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				//stijn test 4
+				//stijn test 5
 			}
 		});
 		add(testButton, 0,1,1,1);
