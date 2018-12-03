@@ -3,13 +3,14 @@ package view.panels;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 
 public class CategoryOverviewPane extends GridPane {
@@ -34,6 +35,7 @@ public class CategoryOverviewPane extends GridPane {
 		this.add(table, 0, 1, 2, 6);
 		
 		btnNew = new Button("New");
+		setNewAction(e -> showDetailPane());
 		this.add(btnNew, 0, 11, 1, 1);
 	}
 	
@@ -43,6 +45,17 @@ public class CategoryOverviewPane extends GridPane {
 	
 	public void setEditAction(EventHandler<MouseEvent> editAction) {
 		table.setOnMouseClicked(editAction);
+	}
+
+	public void showDetailPane(){
+		Stage stage = new Stage();
+		CategoryDetailPane cdp = new CategoryDetailPane();
+
+
+		Scene scene = new Scene(cdp, 250, 150);
+		stage.setScene(scene);
+		stage.show();
+
 	}
 
 }

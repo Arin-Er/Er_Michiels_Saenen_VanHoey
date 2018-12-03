@@ -3,13 +3,15 @@ package view.panels;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class QuestionOverviewPane extends GridPane {
 	private TableView table;
@@ -33,8 +35,11 @@ public class QuestionOverviewPane extends GridPane {
 		this.add(table, 0, 1, 2, 6);
 		
 		btnNew = new Button("New");
+		setNewAction(e -> showQuestionAddScreen());
 		this.add(btnNew, 0, 11, 1, 1);
 	}
+
+
 	
 	public void setNewAction(EventHandler<ActionEvent> newAction) {
 		btnNew.setOnAction(newAction);
@@ -42,6 +47,15 @@ public class QuestionOverviewPane extends GridPane {
 	
 	public void setEditAction(EventHandler<MouseEvent> editAction) {
 		table.setOnMouseClicked(editAction);
+	}
+
+	public void showQuestionAddScreen(){
+		Stage stage = new Stage();
+		QuestionDetailPane qdp = new QuestionDetailPane();
+
+		Scene scene = new Scene(qdp, 300, 250);
+		stage.setScene(scene);
+		stage.show();
 	}
 
 }
