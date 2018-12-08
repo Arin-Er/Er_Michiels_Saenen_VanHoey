@@ -12,3 +12,11 @@ why facade en strategy -> les
 
 
 kleine uitleg van strategy da ik heb gedaan ( arin ) staat in question klasse vanboven
+
+
+
+--
+handler package toevoegen misschien?
+zodat niet al die handlers in de klasse zelf moeten staan
+
+toevoegen questions en categories -> nog uitzoeken hoe categories in dropdownlijstje te krijgen
