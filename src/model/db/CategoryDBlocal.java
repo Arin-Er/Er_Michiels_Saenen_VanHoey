@@ -18,6 +18,11 @@ public class CategoryDBlocal implements CategoryDB {
         this.categories = new ArrayList<Category>();
     }
 
+    public static CategoryDBlocal getInstance(){
+        if(single_instance == null)
+            single_instance = new CategoryDBlocal();
+        return single_instance;
+    }
 
     public void addCategory(Category c){
         //fouten -> als het null is en als die al in de lijst is ( category gelijk wanneer titel hetzelfde is? momenteel op deze manier geimplementeerd)
