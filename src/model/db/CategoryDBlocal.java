@@ -2,7 +2,13 @@ package model.db;
 
 import model.domain.Category;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ListIterator;
+import java.util.Scanner;
 
 public class CategoryDBlocal implements CategoryDB {
     private static CategoryDBlocal single_instance = null;
@@ -13,7 +19,6 @@ public class CategoryDBlocal implements CategoryDB {
     }
 
 
-    @Override
     public void addCategory(Category c){
         //fouten -> als het null is en als die al in de lijst is ( category gelijk wanneer titel hetzelfde is? momenteel op deze manier geimplementeerd)
         if(c == null){
@@ -26,36 +31,121 @@ public class CategoryDBlocal implements CategoryDB {
                 }
             }
         }
-        this.categories.add(c);
+        try {
+            FileWriter writer = new FileWriter("testdatabase/groep.txt",true);
+            writer.write(System.getProperty( "line.separator" ));
+            writer.write(c.getTitle());
+            writer.write(";");
+            writer.write(c.getDescription());
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    //editCategory() toevoegen? niet zeker of dit nodig is. bespreken in de les..
+    public void deleteCategory(Category c) {
+        File file = new File("testdatabase/groep.txt");
+        try {
+            Scanner scannerFile = new Scanner(file);
+            categories.clear();
+            while(scannerFile.hasNextLine()) {
+                Scanner scannerLijn = new Scanner(scannerFile.nextLine());
+                scannerLijn.useDelimiter(";");
+                String categoryLijn = scannerLijn.next();
+                String description = scannerLijn.next();
+                Category category = new Category(categoryLijn,description);
+                categories.clear();
+                categories.add(category);
+                ListIterator<Category> iter = categories.listIterator();
+                while(iter.hasNext()){
+                    if(iter.next().getDescription().equals(c.getDescription())){
+                        iter.remove();
+                    }
+                }
+            }
+            FileWriter writer = new FileWriter("testdatabase/groep.txt",false);
+            writer.write(this.schrijf());
+            writer.flush();
+            writer.close();
 
-    @Override
-    public void deleteCategory(Category c){
-        this.categories.remove(c);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    @Override
-    public Category getCategory(String title){
-        Category result = null;
-        for (Category x : this.categories){
-            if(x.getTitle().equalsIgnoreCase(title.toLowerCase())){
-                result = x;
+    public String schrijf() {
+        String result = "";
+        for(Category cat : this.categories){
+            result += cat.format() + "\n";
+        }
+        return result;
+    }
+    public Category getCategory(String title) {
+        File file = new File("testdatabase/groep.txt");
+        categories.clear();
+        try {
+            Scanner scannerFile = new Scanner(file);
+            while (scannerFile.hasNextLine()) {
+                Scanner scannerLijn = new Scanner(scannerFile.nextLine());
+                scannerLijn.useDelimiter(";");
+                String categoryLijn = scannerLijn.next();
+                String description = scannerLijn.next();
+                Category category = new Category(categoryLijn, description);
+                categories.add(category);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Category result= null;
+        for(Category cat : this.categories){
+            if (cat.getTitle().equals(title)) {
+                result = cat;
             }
         }
-        if(result == null){// als de for each niks heeft gevonden
-            throw new DbException("Given Category was not found");
-        } else{
-            return result;
-        }
+        return result;
     }
-    @Override
+
     public int getSizeCategoryDB(){
-        return this.categories.size();
+        File file = new File("testdatabase/groep.txt");
+        categories.clear();
+        try {
+            Scanner scannerFile = new Scanner(file);
+            while (scannerFile.hasNextLine()) {
+                Scanner scannerLijn = new Scanner(scannerFile.nextLine());
+                scannerLijn.useDelimiter(";");
+                String name = scannerLijn.next();
+                String description = scannerLijn.next();
+                Category category = new Category(name, description);
+                categories.add(category);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        int count = 0;
+        for(Category cat : this.categories){
+            count++;
+        }
+        return count;
     }
-    @Override
     public ArrayList<Category> getCategories(){
-        return this.categories;
+        File file = new File("testdatabase/groep.txt");
+        categories.clear();
+        try {
+            Scanner scannerFile = new Scanner(file);
+            while (scannerFile.hasNextLine()) {
+                Scanner scannerLijn = new Scanner(scannerFile.nextLine());
+                scannerLijn.useDelimiter(";");
+                String name = scannerLijn.next();
+                String description = scannerLijn.next();
+                Category category = new Category(name, description);
+                categories.add(category);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return categories;
     }
 
 }

@@ -32,4 +32,8 @@ public class Category {
     public String getDescription() {
         return description;
     }
+
+    public String format() {
+        return this.getTitle() + ";" + this.getDescription();
+    }
 }
