@@ -2,7 +2,14 @@ package model.db;
 
 import model.domain.Question;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.ListIterator;
+import java.util.Scanner;
 
 public class QuestionDBlocal implements QuestionDB{
     //gelijkaardig aan CategoryDBlocal
@@ -31,20 +38,95 @@ public class QuestionDBlocal implements QuestionDB{
                 }
             }
         }
-
-        this.questions.add(question);
+        try {
+            FileWriter writer = new FileWriter("testdatabase/vraag.txt",true);
+            writer.write(System.getProperty( "line.separator" ));
+            writer.write(question.getCategory());
+            writer.write(";");
+            writer.write(question.getQuestion());
+            writer.write(";");
+            writer.write(question.getCorrectAnswer());
+            writer.write(";");
+            writer.write(question.getFeedback());
+            writer.write(";");
+            writer.write(question.getQuestionType());
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //ook hier twijfelen over een edit. staat nergens in stories
 
-    public void deleteQuestion(Question question){
-        this.questions.remove(question);
+    public void deleteQuestion(Question q){
+        File file = new File("testdatabase/vraag.txt");
+        try {
+            Scanner scannerFile = new Scanner(file);
+            questions.clear();
+            while(scannerFile.hasNextLine()) {
+                Scanner scannerLijn = new Scanner(scannerFile.nextLine());
+                scannerLijn.useDelimiter(";");
+                String category = scannerLijn.next();
+                String vraag = scannerLijn.next();
+                String answer = scannerLijn.next();
+                String feedback = scannerLijn.next();
+                String statement = scannerLijn.next();
+                String[] statements = statement.split("\\/");
+                ArrayList<String> test = new ArrayList<>(Arrays.asList(statements));
+                Question question = new Question(vraag,answer,test,category,feedback);
+                questions.clear();
+                questions.add(question);
+                ListIterator<Question> iter = questions.listIterator();
+                while(iter.hasNext()){
+                    if(iter.next().getQuestion().equals(q.getQuestion())){
+                        iter.remove();
+                    }
+                }
+            }
+            FileWriter writer = new FileWriter("testdatabase/vraag.txt",false);
+            writer.write(this.schrijf());
+            writer.flush();
+            writer.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public String schrijf() {
+        String result = "";
+        for(Question que : this.questions){
+            result += que.format() + "\n";
+        }
+        return result;
     }
 
-    public Question getQuestion(String question){
+    public Question getQuestion(String que){
+        File file = new File("testdatabase/vraag.txt");
+        try {
+            Scanner scannerFile = new Scanner(file);
+            questions.clear();
+            while(scannerFile.hasNextLine()) {
+                Scanner scannerLijn = new Scanner(scannerFile.nextLine());
+                scannerLijn.useDelimiter(";");
+                String category = scannerLijn.next();
+                String vraag = scannerLijn.next();
+                String answer = scannerLijn.next();
+                String feedback = scannerLijn.next();
+                String statement = scannerLijn.next();
+                String[] statements = statement.split("\\/");
+                ArrayList<String> test = new ArrayList<>(Arrays.asList(statements));
+                Question question = new Question(vraag,answer,test,category,feedback);
+                questions.add(question);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         Question result = null;
         for(Question x:this.questions){
-            if(x.getQuestion().equals(question)){
+            if(x.getQuestion().equals(que)){
                 result = x;
             }
         }
@@ -57,15 +139,54 @@ public class QuestionDBlocal implements QuestionDB{
 
     @Override
     public int getSizeQuestionDB() {
-        return 0;
-    }
-
-
-    public int getSizeQuestion(){
-        return this.questions.size();
+        File file = new File("testdatabase/vraag.txt");
+        try {
+            Scanner scannerFile = new Scanner(file);
+            questions.clear();
+            while(scannerFile.hasNextLine()) {
+                Scanner scannerLijn = new Scanner(scannerFile.nextLine());
+                scannerLijn.useDelimiter(";");
+                String category = scannerLijn.next();
+                String vraag = scannerLijn.next();
+                String answer = scannerLijn.next();
+                String feedback = scannerLijn.next();
+                String statement = scannerLijn.next();
+                String[] statements = statement.split("\\/");
+                ArrayList<String> test = new ArrayList<>(Arrays.asList(statements));
+                Question question = new Question(vraag,answer,test,category,feedback);
+                questions.add(question);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        int count = 0;
+        for(Question q : this.questions){
+            count++;
+        }
+        return count;
     }
 
     public ArrayList<Question> getQuestions(){
-        return this.questions;
+        File file = new File("testdatabase/vraag.txt");
+        try {
+            Scanner scannerFile = new Scanner(file);
+            questions.clear();
+            while(scannerFile.hasNextLine()) {
+                Scanner scannerLijn = new Scanner(scannerFile.nextLine());
+                scannerLijn.useDelimiter(";");
+                String category = scannerLijn.next();
+                String vraag = scannerLijn.next();
+                String answer = scannerLijn.next();
+                String feedback = scannerLijn.next();
+                String statement = scannerLijn.next();
+                String[] statements = statement.split("\\/");
+                ArrayList<String> test = new ArrayList<>(Arrays.asList(statements));
+                Question question = new Question(vraag,answer,test,category,feedback);
+                questions.add(question);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return questions;
     }
 }

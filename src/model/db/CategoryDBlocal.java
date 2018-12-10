@@ -60,7 +60,6 @@ public class CategoryDBlocal implements CategoryDB {
                 String categoryLijn = scannerLijn.next();
                 String description = scannerLijn.next();
                 Category category = new Category(categoryLijn,description);
-                categories.clear();
                 categories.add(category);
                 ListIterator<Category> iter = categories.listIterator();
                 while(iter.hasNext()){
@@ -109,7 +108,11 @@ public class CategoryDBlocal implements CategoryDB {
                 result = cat;
             }
         }
-        return result;
+        if(result == null){
+            throw new DbException("Category was not found");
+        }else {
+            return result;
+        }
     }
 
     public int getSizeCategoryDB(){

@@ -93,4 +93,12 @@ public class Question {
         }
         this.questionType = newQuestionType;
     }
+    public String format() {
+        String result =  this.getCategory() + ";" + this.getAnswers() + ";" + this.getCorrectAnswer() + ";" + this.getFeedback() + ";";
+        for (String q : answers){
+            result += q + "/";
+        }
+        result = result.substring(0, result.length() - 1);
+        return result;
+    }
 }
