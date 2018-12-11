@@ -1,5 +1,7 @@
 package view.panels;
 
+import controller.handler.category.toAddCategoryHandler;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,31 +13,40 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.db.CategoryDB;
+import model.domain.Category;
 
 
 public class CategoryOverviewPane extends GridPane {
 	private TableView table;
 	private Button btnNew;
+	private CategoryDB categoryDB;
 	
-	public CategoryOverviewPane() {
+	public CategoryOverviewPane(CategoryDB categoryDB) {
 		this.setPadding(new Insets(5, 5, 5, 5));
         this.setVgap(5);
         this.setHgap(5);
+
+        this.categoryDB = categoryDB;
         
 		this.add(new Label("Categories:"), 0, 0, 1, 1);
 		
-		table = new TableView<>();
+		table = new TableView<Category>();
+		table.setItems(FXCollections.observableArrayList(categoryDB.getCategories()));
 		table.setPrefWidth(REMAINING);
-        TableColumn nameCol = new TableColumn<>("Name");
+
+        TableColumn<Category, String> nameCol = new TableColumn<>("Name");
         nameCol.setCellValueFactory(new PropertyValueFactory("title"));
         table.getColumns().add(nameCol);
+        nameCol.setCellValueFactory(new PropertyValueFactory<Category, String>("title"));
+
         TableColumn descriptionCol = new TableColumn<>("Description");
-        descriptionCol.setCellValueFactory(new PropertyValueFactory("description"));
+        descriptionCol.setCellValueFactory(new PropertyValueFactory<Category, String>("description"));
         table.getColumns().add(descriptionCol);
 		this.add(table, 0, 1, 2, 6);
 		
 		btnNew = new Button("New");
-		setNewAction(e -> showDetailPane());
+		setNewAction(new toAddCategoryHandler(categoryDB));
 		this.add(btnNew, 0, 11, 1, 1);
 	}
 	
@@ -45,17 +56,6 @@ public class CategoryOverviewPane extends GridPane {
 	
 	public void setEditAction(EventHandler<MouseEvent> editAction) {
 		table.setOnMouseClicked(editAction);
-	}
-
-	public void showDetailPane(){
-		Stage stage = new Stage();
-		CategoryDetailPane cdp = new CategoryDetailPane();
-
-
-		Scene scene = new Scene(cdp, 250, 150);
-		stage.setScene(scene);
-		stage.show();
-
 	}
 
 }

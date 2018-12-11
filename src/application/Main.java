@@ -5,6 +5,9 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.db.CategoryDB;
+import model.db.CategoryDBlocal;
+import model.db.DbService;
 import view.panels.AssesMainPane;
 import view.panels.CategoryDetailPane;
 import view.panels.CategoryOverviewPane;
@@ -17,11 +20,13 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
+		DbService dbService = new DbService();
+
 		try {
-			QuestionOverviewPane questionOverviewPane = new QuestionOverviewPane();
+			QuestionOverviewPane questionOverviewPane = new QuestionOverviewPane(dbService.getQuestionDB());
 			QuestionDetailPane questionDetailPane = new QuestionDetailPane();
 
-			CategoryOverviewPane categoryOverviewPanel = new CategoryOverviewPane();
+			CategoryOverviewPane categoryOverviewPanel = new CategoryOverviewPane(dbService.getCategoryDB());
 			CategoryDetailPane categoryDetailPanel = new CategoryDetailPane();
 
 			TestPane testPane = new TestPane();

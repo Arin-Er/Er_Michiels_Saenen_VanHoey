@@ -1,5 +1,6 @@
 package view.panels;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,20 +13,29 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.db.QuestionDB;
+import model.domain.Question;
 
 public class QuestionOverviewPane extends GridPane {
 	private TableView table;
 	private Button btnNew;
+
+	QuestionDB questionDB;
 	
-	public QuestionOverviewPane() {
+	public QuestionOverviewPane(QuestionDB questionDB) {
 		this.setPadding(new Insets(5, 5, 5, 5));
         this.setVgap(5);
         this.setHgap(5);
+
+        this.questionDB = questionDB;
+
         
 		this.add(new Label("Questions:"), 0, 0, 1, 1);
 		
-		table = new TableView<>();
+		table = new TableView<Question>();
+		table.setItems(FXCollections.observableArrayList(questionDB.getQuestions()));
 		table.setPrefWidth(REMAINING);
+
         TableColumn nameCol = new TableColumn<>("Question");
         nameCol.setCellValueFactory(new PropertyValueFactory<>("question"));
         table.getColumns().add(nameCol);

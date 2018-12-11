@@ -30,6 +30,7 @@ public class DbService {
     public ArrayList<Category> getCategories(){
         return  this.categoryDB.getCategories();
     }
+    public CategoryDB getCategoryDB(){return this.categoryDB;}
 
 
 
@@ -49,5 +50,6 @@ public class DbService {
     public ArrayList<Question> getQuestions(){
         return this.questionDB.getQuestions();
     }
+    public QuestionDB getQuestionDB(){ return this.questionDB;}
 
 }
