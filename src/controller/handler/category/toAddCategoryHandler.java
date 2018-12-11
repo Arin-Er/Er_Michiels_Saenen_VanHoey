@@ -5,13 +5,14 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.db.CategoryDB;
+import model.db.DbService;
 import view.panels.CategoryDetailPane;
 
 public class toAddCategoryHandler implements EventHandler<ActionEvent> {
-    public CategoryDB categoryDB;
+    public DbService dbService;
 
-    public toAddCategoryHandler(CategoryDB categoryDB){
-        this.categoryDB = categoryDB;
+    public toAddCategoryHandler(DbService dbService){
+        this.dbService = dbService;
     }
 
     @Override

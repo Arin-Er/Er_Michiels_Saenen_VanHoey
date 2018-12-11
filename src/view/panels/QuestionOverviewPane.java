@@ -1,5 +1,6 @@
 package view.panels;
 
+import controller.handler.question.toAddQuestionHandler;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.db.DbService;
 import model.db.QuestionDB;
 import model.domain.Question;
 
@@ -20,20 +22,20 @@ public class QuestionOverviewPane extends GridPane {
 	private TableView table;
 	private Button btnNew;
 
-	QuestionDB questionDB;
+	DbService dbService;
 	
-	public QuestionOverviewPane(QuestionDB questionDB) {
+	public QuestionOverviewPane(DbService dbService) {
 		this.setPadding(new Insets(5, 5, 5, 5));
         this.setVgap(5);
         this.setHgap(5);
 
-        this.questionDB = questionDB;
+        this.dbService = dbService;
 
         
 		this.add(new Label("Questions:"), 0, 0, 1, 1);
 		
 		table = new TableView<Question>();
-		table.setItems(FXCollections.observableArrayList(questionDB.getQuestions()));
+		table.setItems(FXCollections.observableArrayList(dbService.getQuestions()));
 		table.setPrefWidth(REMAINING);
 
         TableColumn nameCol = new TableColumn<>("Question");
@@ -45,7 +47,7 @@ public class QuestionOverviewPane extends GridPane {
 		this.add(table, 0, 1, 2, 6);
 		
 		btnNew = new Button("New");
-		setNewAction(e -> showQuestionAddScreen());
+		setNewAction(new toAddQuestionHandler(dbService));
 		this.add(btnNew, 0, 11, 1, 1);
 	}
 
