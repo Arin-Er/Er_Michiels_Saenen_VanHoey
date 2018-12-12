@@ -63,7 +63,7 @@ public class QuestionOverviewPane extends GridPane {
 
 	public void showQuestionAddScreen(){
 		Stage stage = new Stage();
-		QuestionDetailPane qdp = new QuestionDetailPane();
+		QuestionDetailPane qdp = new QuestionDetailPane(dbService);
 
 		Scene scene = new Scene(qdp, 300, 250);
 		stage.setScene(scene);

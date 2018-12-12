@@ -18,7 +18,7 @@ public class toAddCategoryHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent e){
         Stage stage = new Stage();
-        CategoryDetailPane categoryDetailPane = new CategoryDetailPane();
+        CategoryDetailPane categoryDetailPane = new CategoryDetailPane(dbService);
 
         Scene scene = new Scene(categoryDetailPane, 250, 150);
         stage.setScene(scene);

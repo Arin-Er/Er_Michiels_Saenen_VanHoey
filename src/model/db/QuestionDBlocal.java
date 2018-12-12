@@ -1,5 +1,7 @@
 package model.db;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.domain.Question;
 
 import java.io.File;
@@ -73,7 +75,7 @@ public class QuestionDBlocal implements QuestionDB{
                 String feedback = scannerLijn.next();
                 String statement = scannerLijn.next();
                 String[] statements = statement.split("\\/");
-                ArrayList<String> test = new ArrayList<>(Arrays.asList(statements));
+                ObservableList<CharSequence> test = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList(statements)));
                 Question question = new Question(vraag,answer,test,category,feedback);
                 questions.clear();
                 questions.add(question);
@@ -117,7 +119,7 @@ public class QuestionDBlocal implements QuestionDB{
                 String feedback = scannerLijn.next();
                 String statement = scannerLijn.next();
                 String[] statements = statement.split("\\/");
-                ArrayList<String> test = new ArrayList<>(Arrays.asList(statements));
+                ObservableList<CharSequence> test = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList(statements)));
                 Question question = new Question(vraag,answer,test,category,feedback);
                 questions.add(question);
             }
@@ -152,7 +154,7 @@ public class QuestionDBlocal implements QuestionDB{
                 String feedback = scannerLijn.next();
                 String statement = scannerLijn.next();
                 String[] statements = statement.split("\\/");
-                ArrayList<String> test = new ArrayList<>(Arrays.asList(statements));
+                ObservableList<CharSequence> test = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList(statements)));
                 Question question = new Question(vraag,answer,test,category,feedback);
                 questions.add(question);
             }
@@ -180,7 +182,7 @@ public class QuestionDBlocal implements QuestionDB{
                 String feedback = scannerLijn.next();
                 String statement = scannerLijn.next();
                 String[] statements = statement.split("\\/");
-                ArrayList<String> test = new ArrayList<>(Arrays.asList(statements));
+                ObservableList<CharSequence> test = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList(statements)));
                 Question question = new Question(vraag,answer,test,category,feedback);
                 questions.add(question);
             }

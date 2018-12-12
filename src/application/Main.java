@@ -24,10 +24,10 @@ public class Main extends Application {
 
 		try {
 			QuestionOverviewPane questionOverviewPane = new QuestionOverviewPane(dbService);
-			QuestionDetailPane questionDetailPane = new QuestionDetailPane();
+			QuestionDetailPane questionDetailPane = new QuestionDetailPane(dbService);
 
 			CategoryOverviewPane categoryOverviewPanel = new CategoryOverviewPane(dbService);
-			CategoryDetailPane categoryDetailPanel = new CategoryDetailPane();
+			CategoryDetailPane categoryDetailPanel = new CategoryDetailPane(dbService);
 
 			TestPane testPane = new TestPane();
 			MessagePane messagePane = new MessagePane();

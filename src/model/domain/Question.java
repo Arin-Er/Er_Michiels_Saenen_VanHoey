@@ -1,5 +1,7 @@
 package model.domain;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.strategyQuestion.QuestionType;
 
 import java.util.ArrayList;
@@ -15,12 +17,12 @@ public class Question {
 
     private String question;
     private String correctAnswer;
-    private ArrayList<String> answers = new ArrayList<>();
+    private ObservableList<CharSequence> answers = FXCollections.observableArrayList(new ArrayList<CharSequence>());
     private String category;
     private String feedback;
     public QuestionType questionType;
 
-    public Question(String question, String correctAnswer, ArrayList<String> answers, String category, String feedback) {
+    public Question(String question, String correctAnswer, ObservableList<CharSequence> answers, String category, String feedback) {
         setQuestion(question);
         setCorrectAnswer(correctAnswer);
         setAnswers(answers);
@@ -43,7 +45,7 @@ public class Question {
         return question;
     }
 
-    public ArrayList<String> getAnswers() {
+    public ObservableList<CharSequence> getAnswers() {
         return answers;
     }
 
@@ -76,7 +78,7 @@ public class Question {
         this.feedback = feedback;
     }
 
-    public void setAnswers(ArrayList<String> answers){
+    public void setAnswers(ObservableList<CharSequence> answers){
         if(answers == null || answers.isEmpty() || answers.size() < 2){
             throw new DomainException("Every question needs at least 2 possible answers");
         }
@@ -95,7 +97,7 @@ public class Question {
     }
     public String format() {
         String result =  this.getCategory() + ";" + this.getAnswers() + ";" + this.getCorrectAnswer() + ";" + this.getFeedback() + ";";
-        for (String q : answers){
+        for (CharSequence q : answers){
             result += q + "/";
         }
         result = result.substring(0, result.length() - 1);

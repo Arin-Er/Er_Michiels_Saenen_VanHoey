@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import model.db.DbService;
 
 public class QuestionDetailPane extends GridPane {
 	private Button btnOK, btnCancel;
@@ -19,7 +20,12 @@ public class QuestionDetailPane extends GridPane {
 	private Button btnAdd, btnRemove;
 	private ComboBox categoryField;
 
-	public QuestionDetailPane() {
+	private DbService dbService;
+
+	public QuestionDetailPane(DbService dbService) {
+
+		this.dbService = dbService;
+
 		this.setPrefHeight(300);
 		this.setPrefWidth(320);
 		
