@@ -23,10 +23,10 @@ public class Main extends Application {
 		DbService dbService = new DbService();
 
 		try {
-			QuestionOverviewPane questionOverviewPane = new QuestionOverviewPane(dbService.getQuestionDB());
+			QuestionOverviewPane questionOverviewPane = new QuestionOverviewPane(dbService);
 			QuestionDetailPane questionDetailPane = new QuestionDetailPane();
 
-			CategoryOverviewPane categoryOverviewPanel = new CategoryOverviewPane(dbService.getCategoryDB());
+			CategoryOverviewPane categoryOverviewPanel = new CategoryOverviewPane(dbService);
 			CategoryDetailPane categoryDetailPanel = new CategoryDetailPane();
 
 			TestPane testPane = new TestPane();

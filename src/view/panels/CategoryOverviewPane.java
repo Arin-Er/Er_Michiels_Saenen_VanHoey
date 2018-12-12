@@ -14,25 +14,26 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.db.CategoryDB;
+import model.db.DbService;
 import model.domain.Category;
 
 
 public class CategoryOverviewPane extends GridPane {
 	private TableView table;
 	private Button btnNew;
-	private CategoryDB categoryDB;
+	private DbService dbService;
 	
-	public CategoryOverviewPane(CategoryDB categoryDB) {
+	public CategoryOverviewPane(DbService dbService) {
 		this.setPadding(new Insets(5, 5, 5, 5));
         this.setVgap(5);
         this.setHgap(5);
 
-        this.categoryDB = categoryDB;
+        this.dbService = dbService;
         
 		this.add(new Label("Categories:"), 0, 0, 1, 1);
 		
 		table = new TableView<Category>();
-		table.setItems(FXCollections.observableArrayList(categoryDB.getCategories()));
+		table.setItems(FXCollections.observableArrayList(dbService.getCategories()));
 		table.setPrefWidth(REMAINING);
 
         TableColumn<Category, String> nameCol = new TableColumn<>("Name");
@@ -46,7 +47,7 @@ public class CategoryOverviewPane extends GridPane {
 		this.add(table, 0, 1, 2, 6);
 		
 		btnNew = new Button("New");
-		setNewAction(new toAddCategoryHandler(categoryDB));
+		setNewAction(new toAddCategoryHandler(dbService));
 		this.add(btnNew, 0, 11, 1, 1);
 	}
 	
