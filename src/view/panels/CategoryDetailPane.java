@@ -1,6 +1,5 @@
 package view.panels;
 
-import controller.handler.category.addCategoryHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -9,7 +8,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import model.db.DbService;
+import model.domain.Category;
 
 public class CategoryDetailPane extends GridPane {
 	private Button btnOK, btnCancel;
@@ -42,9 +43,9 @@ public class CategoryDetailPane extends GridPane {
 
 		btnCancel = new Button("Cancel");
 		this.add(btnCancel, 0, 3, 1, 1);
-
+		setCancelAction(new cancelAddCategoryHandler());
 		btnOK = new Button("Save");
-		setSaveAction(new addCategoryHandler(dbService, titleField, descriptionField));
+		setSaveAction(new addCategoryHandler());
 		btnOK.isDefaultButton();
 		this.add(btnOK, 1, 3, 1, 1);
 	}
@@ -57,4 +58,26 @@ public class CategoryDetailPane extends GridPane {
 		btnCancel.setOnAction(cancelAction);
 	}
 
+	class addCategoryHandler implements EventHandler<ActionEvent>{
+		@Override
+		public void handle(ActionEvent e){
+			String title = titleField.getText();
+			String description = descriptionField.getText();
+			dbService.addCategory(new Category(title, description));
+			titleField.clear();
+			descriptionField.clear();
+			Stage stage = (Stage) btnOK.getScene().getWindow();
+			stage.close();
+		}
+	}
+
+	class cancelAddCategoryHandler implements EventHandler<ActionEvent>{
+		@Override
+		public void handle(ActionEvent e){
+			titleField.clear();
+			descriptionField.clear();
+			Stage stage = (Stage) btnCancel.getScene().getWindow();
+			stage.close();
+		}
+	}
 }

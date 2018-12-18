@@ -1,6 +1,5 @@
 package view.panels;
 
-import controller.handler.question.toAddQuestionHandler;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,9 +15,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.db.DbService;
 import model.db.QuestionDB;
+import model.domain.Observer;
 import model.domain.Question;
 
-public class QuestionOverviewPane extends GridPane {
+import java.util.Scanner;
+
+public class QuestionOverviewPane extends GridPane implements Observer {
 	private TableView table;
 	private Button btnNew;
 
@@ -47,7 +49,7 @@ public class QuestionOverviewPane extends GridPane {
 		this.add(table, 0, 1, 2, 6);
 		
 		btnNew = new Button("New");
-		setNewAction(new toAddQuestionHandler(dbService));
+		setNewAction(new toAddQuestionHandler());
 		this.add(btnNew, 0, 11, 1, 1);
 	}
 
@@ -61,13 +63,21 @@ public class QuestionOverviewPane extends GridPane {
 		table.setOnMouseClicked(editAction);
 	}
 
-	public void showQuestionAddScreen(){
-		Stage stage = new Stage();
-		QuestionDetailPane qdp = new QuestionDetailPane(dbService);
+	@Override
+	public void update(){
+		System.out.println("Update received");
+		table.setItems(FXCollections.observableArrayList(dbService.getQuestions()));
+	}
 
-		Scene scene = new Scene(qdp, 300, 250);
-		stage.setScene(scene);
-		stage.show();
+	class toAddQuestionHandler implements EventHandler<ActionEvent>{
+		@Override
+		public void handle(ActionEvent e){
+			Stage stage = new Stage();
+			QuestionDetailPane questionDetailPane = new QuestionDetailPane(dbService);
+			Scene scene = new Scene(questionDetailPane, 250, 150);
+			stage.setScene(scene);
+			stage.show();
+		}
 	}
 
 }

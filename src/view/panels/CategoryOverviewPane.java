@@ -1,6 +1,5 @@
 package view.panels;
 
-import controller.handler.category.toAddCategoryHandler;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,9 +15,10 @@ import javafx.stage.Stage;
 import model.db.CategoryDB;
 import model.db.DbService;
 import model.domain.Category;
+import model.domain.Observer;
 
 
-public class CategoryOverviewPane extends GridPane {
+public class CategoryOverviewPane extends GridPane implements Observer {
 	private TableView table;
 	private Button btnNew;
 	private DbService dbService;
@@ -47,7 +47,7 @@ public class CategoryOverviewPane extends GridPane {
 		this.add(table, 0, 1, 2, 6);
 		
 		btnNew = new Button("New");
-		setNewAction(new toAddCategoryHandler(dbService));
+		setNewAction(new toAddCategoryHandler());
 		this.add(btnNew, 0, 11, 1, 1);
 	}
 	
@@ -57,6 +57,23 @@ public class CategoryOverviewPane extends GridPane {
 	
 	public void setEditAction(EventHandler<MouseEvent> editAction) {
 		table.setOnMouseClicked(editAction);
+	}
+
+	@Override
+	public void update(){
+		System.out.println("Update received");
+		table.setItems(FXCollections.observableArrayList(dbService.getCategories()));
+	}
+
+	class toAddCategoryHandler implements EventHandler<ActionEvent>{
+		@Override
+		public void handle(ActionEvent e){
+			Stage stage = new Stage();
+			CategoryDetailPane categoryDetailPane = new CategoryDetailPane(dbService);
+			Scene scene = new Scene(categoryDetailPane, 250, 150);
+			stage.setScene(scene);
+			stage.show();
+		}
 	}
 
 }

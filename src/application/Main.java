@@ -32,6 +32,9 @@ public class Main extends Application {
 			TestPane testPane = new TestPane();
 			MessagePane messagePane = new MessagePane();
 
+			dbService.addObserver(questionOverviewPane);
+			dbService.addObserver(categoryOverviewPanel);
+
 			Group root = new Group();
 			Scene scene = new Scene(root, 750, 400);
 
