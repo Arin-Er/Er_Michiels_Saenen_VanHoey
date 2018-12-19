@@ -1,5 +1,6 @@
 package model.db;
 
+import javafx.collections.ObservableList;
 import model.domain.Category;
 
 import java.util.ArrayList;
@@ -14,4 +15,5 @@ public interface CategoryDB {
     int getSizeCategoryDB();
 
     ArrayList<Category> getCategories();
+    ObservableList<String> getCategoryNames();
 }

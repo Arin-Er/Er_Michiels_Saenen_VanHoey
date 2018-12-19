@@ -1,5 +1,7 @@
 package model.db;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.domain.Category;
 
 import java.io.File;
@@ -154,6 +156,28 @@ public class CategoryDBlocal implements CategoryDB {
             e.printStackTrace();
         }
         return categories;
+    }
+
+    @Override
+    public ObservableList<String> getCategoryNames(){
+        ArrayList<String> names = new ArrayList<>();
+        File file = new File("testdatabase/groep.txt");
+        names.clear();
+        try {
+            Scanner scannerFile = new Scanner(file);
+            while (scannerFile.hasNextLine()) {
+                Scanner scannerLijn = new Scanner(scannerFile.nextLine());
+                scannerLijn.useDelimiter(";");
+                String name = scannerLijn.next();
+                scannerLijn.next();
+
+                names.add(name);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return FXCollections.observableArrayList(names);
+
     }
 
 }

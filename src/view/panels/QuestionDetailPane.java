@@ -1,5 +1,6 @@
 package view.panels;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,7 +12,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import model.db.DbService;
+import model.domain.Question;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class QuestionDetailPane extends GridPane {
 	private Button btnOK, btnCancel;
@@ -21,6 +27,7 @@ public class QuestionDetailPane extends GridPane {
 	private ComboBox categoryField;
 
 	private DbService dbService;
+	private ArrayList<String> statements = new ArrayList<String>();
 
 	public QuestionDetailPane(DbService dbService) {
 
@@ -58,7 +65,7 @@ public class QuestionDetailPane extends GridPane {
 		add(addRemove, 1, 8, 2, 1);
 
 		add(new Label("Category: "), 0, 9, 1, 1);
-		categoryField = new ComboBox();
+		categoryField = new ComboBox(dbService.getCategoryNames());
 		add(categoryField, 1, 9, 2, 1);
 
 		add(new Label("Feedback: "), 0, 10, 1, 1);
@@ -73,6 +80,7 @@ public class QuestionDetailPane extends GridPane {
 		btnOK.isDefaultButton();
 		btnOK.setText("Save");
 		add(btnOK, 1, 11, 2, 1);
+		setSaveAction(new addQuestionHandler());
 		
 	}
 
@@ -87,12 +95,37 @@ public class QuestionDetailPane extends GridPane {
 	class AddStatementListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
+			String statement = statementField.getText();
+			statements.add(statement);
+			statementsArea.appendText(statement + "\n");
+			statementField.clear();
 		}
 	}
 
 	class RemoveStatementListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
+			statementsArea.replaceSelection("");
+			String test = statementsArea.getText().trim();
+			statementsArea.clear();
+			statementsArea.appendText(test + "\n");
+		}
+	}
+
+	class addQuestionHandler implements EventHandler<ActionEvent>{
+		@Override
+		public void handle(ActionEvent e){
+			String question = questionField.getText();
+			String correctStatement = statements.get(0);
+			ObservableList<CharSequence> statements = statementsArea.getParagraphs();
+			String category = categoryField.getValue().toString();
+			String feedback = feedbackField.getText();
+
+			Question q = new Question(question, correctStatement, statements, category, feedback);
+			dbService.addQuestion(q);
+
+			Stage stage = (Stage) btnOK.getScene().getWindow();
+			stage.close();
 		}
 	}
 }

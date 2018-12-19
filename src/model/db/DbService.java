@@ -1,5 +1,6 @@
 package model.db;
 
+import javafx.collections.ObservableList;
 import model.domain.Category;
 import model.domain.Observer;
 import model.domain.Question;
@@ -36,6 +37,9 @@ public class DbService implements Subject {
         return  this.categoryDB.getCategories();
     }
     public CategoryDB getCategoryDB(){return this.categoryDB;}
+    public ObservableList<String> getCategoryNames(){
+        return this.categoryDB.getCategoryNames();
+    }
 
 
 

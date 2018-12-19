@@ -79,7 +79,8 @@ public class Question {
     }
 
     public void setAnswers(ObservableList<CharSequence> answers){
-        if(answers == null || answers.isEmpty() || answers.size() < 2){
+        System.out.println(answers.size());
+        if(answers.isEmpty() || answers.size() < 2){
             throw new DomainException("Every question needs at least 2 possible answers");
         }
         this.answers = answers;

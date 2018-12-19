@@ -74,7 +74,7 @@ public class QuestionOverviewPane extends GridPane implements Observer {
 		public void handle(ActionEvent e){
 			Stage stage = new Stage();
 			QuestionDetailPane questionDetailPane = new QuestionDetailPane(dbService);
-			Scene scene = new Scene(questionDetailPane, 250, 150);
+			Scene scene = new Scene(questionDetailPane, 250, 300);
 			stage.setScene(scene);
 			stage.show();
 		}

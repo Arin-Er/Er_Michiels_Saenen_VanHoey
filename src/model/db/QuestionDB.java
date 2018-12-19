@@ -1,5 +1,6 @@
 package model.db;
 
+import javafx.collections.ObservableList;
 import model.domain.Question;
 
 import java.util.ArrayList;
@@ -10,4 +11,5 @@ public interface QuestionDB {
     Question getQuestion(String question);
     int getSizeQuestionDB();
     ArrayList<Question> getQuestions();
+
 }

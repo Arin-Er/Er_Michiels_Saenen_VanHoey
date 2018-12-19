@@ -51,7 +51,12 @@ public class QuestionDBlocal implements QuestionDB{
             writer.write(";");
             writer.write(question.getFeedback());
             writer.write(";");
-            writer.write(question.getQuestionType());
+            /*writer.write(question.getQuestionType());
+            writer.write(";");*/
+            for(CharSequence s : question.getAnswers()){
+                writer.write(s.toString());
+                writer.write("/");
+            }
             writer.flush();
             writer.close();
         } catch (IOException e) {
@@ -138,6 +143,7 @@ public class QuestionDBlocal implements QuestionDB{
             return result;
         }
     }
+
 
     @Override
     public int getSizeQuestionDB() {
