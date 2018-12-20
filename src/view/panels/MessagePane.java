@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
@@ -14,11 +15,15 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import model.db.DbService;
 
 public class MessagePane extends GridPane {
 	private Button testButton;
+	private DbService service;
 	
-	public MessagePane (){
+	public MessagePane (DbService service){
+		this.service = service;
 	    setBorder(new Border(new BorderStroke(Color.BLACK, 
 	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
@@ -31,7 +36,13 @@ public class MessagePane extends GridPane {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				//stijn test 5
+				//pagina openen waar vragen kunne gesteld worden
+
+				Stage stage = new Stage();
+				TestPane testPane = new TestPane(service);
+				Scene scene = new Scene(testPane, 500, 250);
+				stage.setScene(scene);
+				stage.show();
 			}
 		});
 		add(testButton, 0,1,1,1);

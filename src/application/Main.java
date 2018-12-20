@@ -29,8 +29,8 @@ public class Main extends Application {
 			CategoryOverviewPane categoryOverviewPanel = new CategoryOverviewPane(dbService);
 			CategoryDetailPane categoryDetailPanel = new CategoryDetailPane(dbService);
 
-			TestPane testPane = new TestPane();
-			MessagePane messagePane = new MessagePane();
+			TestPane testPane = new TestPane(dbService);
+			MessagePane messagePane = new MessagePane(dbService);
 
 			dbService.addObserver(questionOverviewPane);
 			dbService.addObserver(categoryOverviewPanel);
