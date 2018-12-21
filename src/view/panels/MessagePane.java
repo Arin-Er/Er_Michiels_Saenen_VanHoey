@@ -36,8 +36,6 @@ public class MessagePane extends GridPane {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				//pagina openen waar vragen kunne gesteld worden
-
 				Stage stage = new Stage();
 				TestPane testPane = new TestPane(service);
 				Scene scene = new Scene(testPane, 500, 250);
