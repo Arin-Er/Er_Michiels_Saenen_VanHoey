@@ -2,5 +2,3 @@ Design principles;The SOLID design principles
 Design patterns;Design patterns this year
 Java;Java extra's
 UML;Technique of drawing a class diagram
-test;test
-bla;bla
