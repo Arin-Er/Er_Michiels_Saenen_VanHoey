@@ -16,6 +16,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.db.DbService;
+import model.domain.Category;
 import model.domain.Question;
 
 public class TestPane extends GridPane {
@@ -26,11 +27,15 @@ public class TestPane extends GridPane {
 	private int counter = 0;
 	private RadioButton answerRadioButton;
 	private ArrayList<Question> questionsToAsk;
+	private ArrayList<Category> categories;
+	private int score;
+
 
 	public TestPane (DbService dbService){
 		this.dbService = dbService;
 
 		questionsToAsk = dbService.getQuestions();
+		categories = dbService.getCategories();
 
 		this.setPrefHeight(300);
 		this.setPrefWidth(750);
@@ -41,6 +46,13 @@ public class TestPane extends GridPane {
 
         setItems();
 
+	}
+	private void addScore(Category category) {
+		for (Category c : categories) {
+			if (c.equals(category)) {
+				c.addToScore();
+			}
+		}
 	}
 
 	public void setItems(){
@@ -62,6 +74,7 @@ public class TestPane extends GridPane {
 			counter += 1; // counter added so answers arent on top of eachother
 		}
 
+
 		//add submit button
 		submitButton = new Button("Submit");
 		add(submitButton, 0, 1 + counter, 1, 1); // also has counter otherwise will be in answer
@@ -73,8 +86,10 @@ public class TestPane extends GridPane {
 				String answer = answerButton.getText();
 				
 				if(answer.equals(question.getCorrectAnswer())){
-					//score needs to be increaser per category
-					System.out.println("score + 1");
+					
+					System.out.println(score);
+
+
 				}
 				if(questionsToAsk.isEmpty()){
 					Stage stage = (Stage) submitButton.getScene().getWindow();
@@ -110,6 +125,11 @@ public class TestPane extends GridPane {
 		}
 		return selected;
 	}
+
+
 }
+
+
+
 
 

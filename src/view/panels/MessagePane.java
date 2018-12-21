@@ -8,6 +8,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -21,6 +22,7 @@ import model.db.DbService;
 public class MessagePane extends GridPane {
 	private Button testButton;
 	private DbService service;
+	private TextArea textArea;
 	
 	public MessagePane (DbService service){
 		this.service = service;
@@ -30,6 +32,9 @@ public class MessagePane extends GridPane {
 		this.setPadding(new Insets(5, 5, 5, 5));
         this.setVgap(5);
         this.setHgap(5);
+
+        textArea = new TextArea();
+
         
 		testButton = new Button("Evaluate");
 		testButton.setOnAction(new EventHandler<ActionEvent>() { //TODO remove or generalize
