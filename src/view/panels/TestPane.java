@@ -3,6 +3,7 @@ package view.panels;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,19 +12,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
-import model.db.DbService;
 import model.domain.Question;
 
 public class TestPane extends GridPane {
 	private Label questionField;
 	private Button submitButton;
 	private ToggleGroup statementGroup;
-	private DbService dbService;
+	private Controller controller = Controller.getInstance();
 	private int counter = 0;
 	
-	public TestPane (DbService dbService){
-		this.dbService = dbService;
-
+	public TestPane (){
 		this.setPrefHeight(300);
 		this.setPrefWidth(750);
 		
@@ -32,7 +30,7 @@ public class TestPane extends GridPane {
         this.setHgap(5);
 
         //test:
-		Question q = dbService.getQuestion("Welk patroon definieert een familie van algorimtes, kapselt ze in en maakt ze verwisselbaar?");
+		Question q = controller.getQuestion("Welk patroon definieert een familie van algorimtes, kapselt ze in en maakt ze verwisselbaar?");
 		questionField = new Label();
 		questionField.setText(q.getQuestion());
 		add(questionField, 0, 0, 1, 1);

@@ -1,5 +1,6 @@
 package view.panels;
 
+import controller.Controller;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,27 +14,25 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.db.CategoryDB;
-import model.db.DbService;
 import model.domain.Category;
 import model.domain.Observer;
+
 
 
 public class CategoryOverviewPane extends GridPane implements Observer {
 	private TableView table;
 	private Button btnNew;
-	private DbService dbService;
+	private Controller controller = Controller.getInstance();
 	
-	public CategoryOverviewPane(DbService dbService) {
+	public CategoryOverviewPane() {
 		this.setPadding(new Insets(5, 5, 5, 5));
         this.setVgap(5);
         this.setHgap(5);
-
-        this.dbService = dbService;
         
 		this.add(new Label("Categories:"), 0, 0, 1, 1);
 		
 		table = new TableView<Category>();
-		table.setItems(FXCollections.observableArrayList(dbService.getCategories()));
+		table.setItems(FXCollections.observableArrayList(controller.getCategories()));
 		table.setPrefWidth(REMAINING);
 
         TableColumn<Category, String> nameCol = new TableColumn<>("Name");
@@ -62,14 +61,14 @@ public class CategoryOverviewPane extends GridPane implements Observer {
 	@Override
 	public void update(){
 		System.out.println("Update received");
-		table.setItems(FXCollections.observableArrayList(dbService.getCategories()));
+		table.setItems(FXCollections.observableArrayList(controller.getCategories()));
 	}
 
 	class toAddCategoryHandler implements EventHandler<ActionEvent>{
 		@Override
 		public void handle(ActionEvent e){
 			Stage stage = new Stage();
-			CategoryDetailPane categoryDetailPane = new CategoryDetailPane(dbService);
+			CategoryDetailPane categoryDetailPane = new CategoryDetailPane();
 			Scene scene = new Scene(categoryDetailPane, 250, 150);
 			stage.setScene(scene);
 			stage.show();

@@ -1,5 +1,6 @@
 package application;
 
+import controller.Controller;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -7,7 +8,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.db.CategoryDB;
 import model.db.CategoryDBlocal;
-import model.db.DbService;
 import view.panels.AssesMainPane;
 import view.panels.CategoryDetailPane;
 import view.panels.CategoryOverviewPane;
@@ -20,20 +20,20 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
-		DbService dbService = new DbService();
+		Controller controller = Controller.getInstance();
 
 		try {
-			QuestionOverviewPane questionOverviewPane = new QuestionOverviewPane(dbService);
-			QuestionDetailPane questionDetailPane = new QuestionDetailPane(dbService);
+			QuestionOverviewPane questionOverviewPane = new QuestionOverviewPane();
+			QuestionDetailPane questionDetailPane = new QuestionDetailPane();
 
-			CategoryOverviewPane categoryOverviewPanel = new CategoryOverviewPane(dbService);
-			CategoryDetailPane categoryDetailPanel = new CategoryDetailPane(dbService);
+			CategoryOverviewPane categoryOverviewPanel = new CategoryOverviewPane();
+			CategoryDetailPane categoryDetailPanel = new CategoryDetailPane();
 
-			TestPane testPane = new TestPane(dbService);
-			MessagePane messagePane = new MessagePane(dbService);
+			TestPane testPane = new TestPane();
+			MessagePane messagePane = new MessagePane();
 
-			dbService.addObserver(questionOverviewPane);
-			dbService.addObserver(categoryOverviewPanel);
+			controller.getService().addObserver(questionOverviewPane);
+			controller.getService().addObserver(categoryOverviewPanel);
 
 			Group root = new Group();
 			Scene scene = new Scene(root, 750, 400);

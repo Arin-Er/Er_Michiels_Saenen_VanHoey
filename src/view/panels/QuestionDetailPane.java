@@ -1,5 +1,6 @@
 package view.panels;
 
+import controller.Controller;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,7 +14,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import model.db.DbService;
 import model.domain.Question;
 
 import java.util.ArrayList;
@@ -26,13 +26,10 @@ public class QuestionDetailPane extends GridPane {
 	private Button btnAdd, btnRemove;
 	private ComboBox categoryField;
 
-	private DbService dbService;
+	private Controller controller = Controller.getInstance();
 	private ArrayList<String> statements = new ArrayList<String>();
 
-	public QuestionDetailPane(DbService dbService) {
-
-		this.dbService = dbService;
-
+	public QuestionDetailPane() {
 		this.setPrefHeight(300);
 		this.setPrefWidth(320);
 		
@@ -65,7 +62,7 @@ public class QuestionDetailPane extends GridPane {
 		add(addRemove, 1, 8, 2, 1);
 
 		add(new Label("Category: "), 0, 9, 1, 1);
-		categoryField = new ComboBox(dbService.getCategoryNames());
+		categoryField = new ComboBox(controller.getCategoryNames());
 		add(categoryField, 1, 9, 2, 1);
 
 		add(new Label("Feedback: "), 0, 10, 1, 1);
@@ -122,7 +119,7 @@ public class QuestionDetailPane extends GridPane {
 			String feedback = feedbackField.getText();
 
 			Question q = new Question(question, correctStatement, statements, category, feedback);
-			dbService.addQuestion(q);
+			controller.addQuestion(q);
 
 			Stage stage = (Stage) btnOK.getScene().getWindow();
 			stage.close();

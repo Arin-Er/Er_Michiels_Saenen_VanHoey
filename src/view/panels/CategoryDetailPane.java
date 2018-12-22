@@ -1,5 +1,6 @@
 package view.panels;
 
+import controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -9,19 +10,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import model.db.DbService;
 import model.domain.Category;
 
 public class CategoryDetailPane extends GridPane {
 	private Button btnOK, btnCancel;
 	private TextField titleField, descriptionField;
 	private ComboBox categoryField;
-	private DbService dbService;
+	private Controller controller = Controller.getInstance();
 
-	public CategoryDetailPane(DbService dbService) {
-
-		this.dbService = dbService;
-
+	public CategoryDetailPane() {
 		this.setPrefHeight(150);
 		this.setPrefWidth(300);
 		
@@ -63,7 +60,7 @@ public class CategoryDetailPane extends GridPane {
 		public void handle(ActionEvent e){
 			String title = titleField.getText();
 			String description = descriptionField.getText();
-			dbService.addCategory(new Category(title, description));
+			controller.addCategory(new Category(title, description));
 			titleField.clear();
 			descriptionField.clear();
 			Stage stage = (Stage) btnOK.getScene().getWindow();

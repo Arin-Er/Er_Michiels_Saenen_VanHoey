@@ -2,6 +2,7 @@ package view.panels;
 
 import java.util.Observer;
 
+import controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -16,14 +17,12 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import model.db.DbService;
 
 public class MessagePane extends GridPane {
 	private Button testButton;
-	private DbService service;
+	private Controller controller = Controller.getInstance();
 	
-	public MessagePane (DbService service){
-		this.service = service;
+	public MessagePane (){
 	    setBorder(new Border(new BorderStroke(Color.BLACK, 
 	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
@@ -39,7 +38,7 @@ public class MessagePane extends GridPane {
 				//pagina openen waar vragen kunne gesteld worden
 
 				Stage stage = new Stage();
-				TestPane testPane = new TestPane(service);
+				TestPane testPane = new TestPane();
 				Scene scene = new Scene(testPane, 500, 250);
 				stage.setScene(scene);
 				stage.show();
