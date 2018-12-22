@@ -47,9 +47,10 @@ public class TestPane extends GridPane {
         setItems();
 
 	}
-	private void addScore(Category category) {
+	private void addScore(String category) {
 		for (Category c : categories) {
-			if (c.equals(category)) {
+			if (c.getTitle().equals(category)) {
+				System.out.println(c.getTitle());
 				c.addToScore();
 			}
 		}
@@ -86,10 +87,8 @@ public class TestPane extends GridPane {
 				String answer = answerButton.getText();
 				
 				if(answer.equals(question.getCorrectAnswer())){
-					
-					System.out.println(score);
-
-
+					addScore(question.getCategory());
+					System.out.println(dbService.getCategory(question.getCategory()).getTitle() + " has score of " + dbService.getCategory(question.getCategory()).getScore());
 				}
 				if(questionsToAsk.isEmpty()){
 					Stage stage = (Stage) submitButton.getScene().getWindow();
