@@ -1,3 +1,4 @@
 Design principles;Welk patroon definieert een familie van algorimtes, kapselt ze in en maakt ze verwisselbaar?;Facade;Dit is feedback van de eerste vraag;Facade/Strategy/State/Singleton
 Design principles;Welk ontwerp principe is het minst van toepassing op het Strategy patroon?;Open-Closed;Dit is feedback van de tweede vraag;Open-Closed/Single Responsibility/Liskov/Dependency Inversion
 test;test;testcorrect;test;testcorrect/test//
+arin;arin;arin;aaaaaa;arin/arin//
