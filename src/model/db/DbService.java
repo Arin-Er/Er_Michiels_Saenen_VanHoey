@@ -44,6 +44,7 @@ public class DbService implements Subject {
 
 
 
+
     public void addQuestion(Question question){
         this.questionDB.addQuestion(question);
         notifyObservers();

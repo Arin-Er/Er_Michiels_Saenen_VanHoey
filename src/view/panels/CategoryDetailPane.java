@@ -35,7 +35,7 @@ public class CategoryDetailPane extends GridPane {
 		this.add(descriptionField, 1, 1, 1, 1);
 
 		this.add(new Label("Main Category:"), 0, 2, 1, 1);
-		categoryField = new ComboBox<>();
+		categoryField = new ComboBox<>(dbService.getCategoryNames());
 		this.add(categoryField, 1, 2, 1, 1);
 
 		btnCancel = new Button("Cancel");
