@@ -25,8 +25,8 @@ public class Score {
 
     public void controlAnwser(String answer) {
         String category = questions.get(currentQuestionId).getCategory();
+        System.out.println("Category: " + category);
         if (questions.get(currentQuestionId).getCorrectAnswer().equals(answer)) {
-
             score.put(category, score.get(category) + 1);
             totalscoren.put(category, totalscoren.get(category) + 1);
         } else {

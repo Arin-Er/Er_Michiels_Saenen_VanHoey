@@ -60,7 +60,6 @@ public class CategoryOverviewPane extends GridPane implements Observer {
 
 	@Override
 	public void update(){
-		System.out.println("Update received");
 		table.setItems(FXCollections.observableArrayList(controller.getCategories()));
 	}
 

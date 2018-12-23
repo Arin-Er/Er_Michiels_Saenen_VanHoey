@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Observer;
 
 import controller.Controller;
+import handler.processAnswerHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -35,23 +36,25 @@ public class MessagePane extends GridPane {
 		testButton = new Button("Evaluate");
 		l = new Text();
 		this.showEvaluation();
-		testButton.setOnAction(new EventHandler<ActionEvent>() { //TODO remove or generalize
-			
-			@Override
-			public void handle(ActionEvent event) {
-				//pagina openen waar vragen kunne gesteld worden
-
-				Stage stage = new Stage();
-				TestPane testPane = new TestPane(controller);
-				Scene scene = new Scene(testPane, 500, 250);
-				controller.newTest(); // zo wordt score bijgehouden aan begin van test denk ik
-				add(l, 0,0,1,1);
-				stage.setScene(scene);
-				stage.show();
-			}
-		});
+		testButton.setOnAction(new startTest());
 		add(testButton, 0,1,1,1);
 		setHalignment(testButton, HPos.CENTER);
+	}
+
+	class startTest implements EventHandler<ActionEvent>{
+		@Override
+		public void handle(ActionEvent event) {
+			//pagina openen waar vragen kunne gesteld worden
+			controller.resetQuestionNumber();
+			Stage stage = new Stage();
+			TestPane testPane = new TestPane(controller);
+			Scene scene = new Scene(testPane, 500, 250);
+			controller.newTest(); // zo wordt score bijgehouden aan begin van test denk ik
+			add(l, 0,0,1,1);
+			stage.setScene(scene);
+			stage.show();
+			testPane.setProcessAnswerAction(new processAnswerHandler(testPane, stage));
+		}
 	}
 
 	public void showEvaluation() throws IOException {

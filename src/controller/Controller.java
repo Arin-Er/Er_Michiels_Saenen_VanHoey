@@ -82,6 +82,17 @@ public class Controller implements Observer {
         return service.getScore();
     }
 
+    public String getNextQuestion(){
+        String question = "";
+        if(!getQuestions().isEmpty()){
+            if(questionNumber < getQuestions().size()){
+                question = getQuestions().get(questionNumber).getQuestion();
+                questionNumber++;
+            }
+        }
+        return question;
+    }
+
     @Override
     public void update() {
 

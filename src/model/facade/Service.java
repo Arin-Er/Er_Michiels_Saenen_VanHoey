@@ -81,7 +81,6 @@ public class Service implements Subject, CategoryDB, QuestionDB {
 
     public void newTest() {
         score = new Score(this.getCategories(),this.getQuestions());
-
     }
 
     public void addScore(Category category) {

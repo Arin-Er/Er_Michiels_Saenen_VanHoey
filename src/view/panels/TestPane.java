@@ -9,6 +9,7 @@ import controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -40,8 +41,23 @@ public class TestPane extends GridPane {
 		this.setPadding(new Insets(5, 5, 5, 5));
         this.setVgap(5);
         this.setHgap(5);
-         setItems();
+
+        questionField = new Label();
+        questionField.setText(controller.getNextQuestion());
+        add(questionField, 0, 0, 1,1);
+
+        statementGroup = new ToggleGroup();
+		for(CharSequence s : controller.getQuestion(questionField.getText()).getAnswers()){
+			RadioButton rb = new RadioButton(s.toString());
+			rb.setUserData(s.toString());
+			rb.setToggleGroup(statementGroup);
+			add(rb, 0, 1 + counter);
+			counter ++;
 		}
+
+		submitButton = new Button("Submit");
+		add(submitButton, 0, 1+ counter, 1, 1);
+	}
 
 	public void setItems(){
 		//get Random question
@@ -66,29 +82,17 @@ public class TestPane extends GridPane {
 
 		submitButton = new Button("Submit");
 		add(submitButton, 0, 1 + counter,1, 1 );
-		submitButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				questionsToAsk.remove(question);
-				String answer = statementGroup.getSelectedToggle().getUserData().toString();
-				//controller.getScore().controlAnwser(answer); // gaat scoren juist doen normaal
-				if(answer.equals(question.getCorrectAnswer())){
-					//De volgende lijn code is volgens mij fout, hij voegt dat niet per categorie toe
-					//score += controller.getService().addScore(question.getCategory());
-					score += controller.getService().getCategory(question.getCategory()).getScore();
-					System.out.println(controller.getService().getCategory(question.getCategory()).getTitle() + " has score of " + score);
-				}
-				if(questionsToAsk.isEmpty()){
-					Stage stage = (Stage) submitButton.getScene().getWindow();
-					stage.close();
-					controller.getEvaluation().setProperty("test", "true");
-				}
-				else{
-					reset();
-					setItems();
-				}
-			}
-		});
+	}
+
+
+	public String getAnswer(){
+		String answer = "";
+		try{
+			answer = statementGroup.getSelectedToggle().getUserData().toString();
+		}catch(NullPointerException e){
+			System.out.println(e.getMessage());
+		}
+		return answer;
 	}
 
 	public void setProcessAnswerAction(EventHandler<ActionEvent> processAnswerAction) {
