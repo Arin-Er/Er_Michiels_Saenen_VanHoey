@@ -77,9 +77,38 @@ public class Service implements Subject, CategoryDB, QuestionDB {
 
     }
 
-    public Score getScore(){
-        this.notifyObservers();
-        return score;
+    public void addScore(Category category) {
+        for(Category c : categoryDB.getCategories()) {
+            if (c.equals(category)) {
+                c.addToScore();
+            }
+        }
+    }
+
+    public int totalScore() {
+        int max = 0;
+        for(Category c : this.categoryDB.getCategories()) {
+            max += c.getScore();
+        }
+        return max;
+    }
+
+    public int getTotalMaxScore() {
+        int max = 0;
+        for(Question q : questionDB.getQuestions()) {
+            max += 1;
+        }
+        return max;
+    }
+
+    public int getMaxScore(Category c) {
+        int max = 0;
+        for(Question q :  questionDB.getQuestions()) {
+            if(q.getCategory().equals(c)) {
+                max += 1;
+            }
+        }
+        return max;
     }
 
     @Override

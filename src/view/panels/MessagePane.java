@@ -38,7 +38,7 @@ public class MessagePane extends GridPane {
 				//pagina openen waar vragen kunne gesteld worden
 
 				Stage stage = new Stage();
-				TestPane testPane = new TestPane();
+				TestPane testPane = new TestPane(controller);
 				Scene scene = new Scene(testPane, 500, 250);
 				stage.setScene(scene);
 				stage.show();

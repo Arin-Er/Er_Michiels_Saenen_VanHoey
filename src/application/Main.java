@@ -29,7 +29,7 @@ public class Main extends Application {
 			CategoryOverviewPane categoryOverviewPanel = new CategoryOverviewPane();
 			CategoryDetailPane categoryDetailPanel = new CategoryDetailPane();
 
-			TestPane testPane = new TestPane();
+			TestPane testPane = new TestPane(controller);
 			MessagePane messagePane = new MessagePane();
 
 			controller.getService().addObserver(questionOverviewPane);

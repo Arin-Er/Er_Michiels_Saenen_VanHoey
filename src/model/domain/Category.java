@@ -3,18 +3,14 @@ package model.domain;
 public class Category {
     private String title;
     private String description;
-    private int score = 0;
+    private int score;
     //subcategory ??? hoe  ??? pag 7 puntje 2
 
     public Category(String title, String description){
         setTitle(title);
         setDescription(description);
-        //this.score = 0;
+        this.score = 0;
 
-    }
-    public void addToScore() {
-        System.out.println("score added");
-        this.score += 1;
     }
 
     public void setTitle(String title) {
@@ -42,6 +38,9 @@ public class Category {
 
     public int getScore() {
         return score + 1;
+    }
+    public void addToScore() {
+        this.score += 1;
     }
 
 
