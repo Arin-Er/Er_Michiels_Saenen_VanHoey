@@ -34,7 +34,7 @@ public class MessagePane extends GridPane {
         
 		testButton = new Button("Evaluate");
 		l = new Text();
-		//this.showEvaluation();
+		this.showEvaluation();
 		testButton.setOnAction(new EventHandler<ActionEvent>() { //TODO remove or generalize
 			
 			@Override
@@ -56,20 +56,18 @@ public class MessagePane extends GridPane {
 	public void showEvaluation() throws IOException {
 		if (controller.getEvaluation().getPropertyValue("test").equals("false")) {
 			l.setText("You never did this Test!");
-
 		}
 		if (controller.getEvaluation().getPropertyValue("test").equals("true")) {
 			l.setText("You already did this Test!");
-
 		}
 		if (controller.getQuestions().size() > 0 && controller.getQuestionNumber() == controller.getQuestions().size()) {
-			if (controller.getEvaluation().getPropertyValue("feedbackType").equals("score")) {
+			if (controller.getEvaluation().getPropertyValue("evaluation.mode").equals("score")) {
 				l.setText(controller.getScoreFeedback().toString());
-				controller.getEvaluation().setProperty("feedbackType", "score");
+				controller.getEvaluation().setProperty("evaluation.mode", "score");
 			}
-			if (controller.getEvaluation().getPropertyValue("feedbackType").equals("feedback")) {
+			if (controller.getEvaluation().getPropertyValue("evaluation.mode").equals("feedback")) {
 				l.setText(controller.getScoreFeedback().toStringFeedback());
-				controller.getEvaluation().setProperty("feedbackType", "feedback");
+				controller.getEvaluation().setProperty("evaluation.mode", "feedback");
 
 			}
 

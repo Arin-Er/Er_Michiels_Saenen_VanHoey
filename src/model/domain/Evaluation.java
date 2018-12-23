@@ -43,7 +43,7 @@ public class Evaluation {
 
             outputStream = new FileOutputStream("evaluation.properties");
             prop.setProperty("test", prop2.getProperty("test"));
-            prop.setProperty("feedbackType", prop2.getProperty("evaluation.mode"));
+            prop.setProperty("evaluation.mode", prop2.getProperty("evaluation.mode"));
             prop.setProperty(propName, propValue);
             prop.store(outputStream, null);
 
