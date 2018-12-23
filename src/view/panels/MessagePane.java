@@ -45,6 +45,7 @@ public class MessagePane extends GridPane {
 				TestPane testPane = new TestPane(controller);
 				Scene scene = new Scene(testPane, 500, 250);
 				controller.newTest(); // zo wordt score bijgehouden aan begin van test denk ik
+				add(l, 0,0,1,1);
 				stage.setScene(scene);
 				stage.show();
 			}
