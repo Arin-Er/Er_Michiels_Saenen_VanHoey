@@ -1,9 +1,7 @@
 package controller;
 
 import javafx.collections.ObservableList;
-import model.domain.Category;
-import model.domain.Observer;
-import model.domain.Question;
+import model.domain.*;
 import model.facade.Service;
 
 import java.util.ArrayList;
@@ -58,6 +56,31 @@ public class Controller implements Observer {
         return this.service.getQuestions();
     }
 
+
+    public Evaluation getEvaluation(){
+        return service.getEvaluation();
+    }
+
+    public void newTest(){
+        service.newTest();
+    }
+
+    public Score getScoreFeedback(){
+        return service.getScore();
+    }
+
+    public void resetQuestionNumber(){
+        this.questionNumber = 0;
+    }
+
+    public int getQuestionNumber(){
+        return this.questionNumber;
+    }
+
+    public Score getScore(){
+        testKlaar = true;
+        return service.getScore();
+    }
 
     @Override
     public void update() {

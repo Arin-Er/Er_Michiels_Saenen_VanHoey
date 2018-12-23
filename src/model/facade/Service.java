@@ -11,17 +11,24 @@ public class Service implements Subject, CategoryDB, QuestionDB {
     private CategoryDB categoryDB;
     private QuestionDB questionDB;
     public List<Observer> observers;
+    private Evaluation evaluation;
     private Score score;
 
     public Service() {
         categoryDB= CategoryDBlocal.getInstance();
         questionDB= QuestionDBlocal.getInstance();
+        evaluation = new Evaluation();
         observers = new ArrayList<Observer>();
     }
 
     public void addCategory(Category category){
         this.categoryDB.addCategory(category);
         this.notifyObservers();
+    }
+
+
+    public Evaluation getEvaluation(){
+        return evaluation;
     }
 
     @Override
@@ -109,6 +116,11 @@ public class Service implements Subject, CategoryDB, QuestionDB {
             }
         }
         return max;
+    }
+
+    public Score getScore(){
+        this.notifyObservers();
+        return score;
     }
 
     @Override
