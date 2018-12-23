@@ -48,7 +48,8 @@ public class Evaluation {
             prop.store(outputStream, null);
 
         } catch (Exception e) {
-            System.out.println("Exception: " + e);
+            e.printStackTrace();
+            System.out.println("1Exception: " + e);
         } finally {
             try {
                 this.outputStream.close();

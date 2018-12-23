@@ -71,13 +71,13 @@ public class TestPane extends GridPane {
 			public void handle(ActionEvent event) {
 				questionsToAsk.remove(question);
 				String answer = statementGroup.getSelectedToggle().getUserData().toString();
-				controller.getScore().controlAnwser(answer); // gaat scoren juist doen normaal
-				/*if(answer.equals(question.getCorrectAnswer())){
+				//controller.getScore().controlAnwser(answer); // gaat scoren juist doen normaal
+				if(answer.equals(question.getCorrectAnswer())){
 					//De volgende lijn code is volgens mij fout, hij voegt dat niet per categorie toe
 					//score += controller.getService().addScore(question.getCategory());
 					score += controller.getService().getCategory(question.getCategory()).getScore();
 					System.out.println(controller.getService().getCategory(question.getCategory()).getTitle() + " has score of " + score);
-				}*/
+				}
 				if(questionsToAsk.isEmpty()){
 					Stage stage = (Stage) submitButton.getScene().getWindow();
 					stage.close();
