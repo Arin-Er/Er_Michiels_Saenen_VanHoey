@@ -79,7 +79,7 @@ public class Score {
         if (totalscore == questions.size()) {
             return "Beautiful! Everything is Perfect!";
         } else {
-            return "Your Score: " + totalscore + "\n" + total;
+            return "Your Score: " + totalscore +"/" + questions.size() + "\n" + total;
         }
     }
 

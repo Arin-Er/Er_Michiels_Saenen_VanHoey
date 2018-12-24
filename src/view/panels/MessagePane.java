@@ -25,37 +25,38 @@ public class MessagePane extends GridPane {
 	private Button testButton;
 	private Controller controller = Controller.getInstance();
 	private Text l;
-	public MessagePane () throws IOException {
-	    setBorder(new Border(new BorderStroke(Color.BLACK, 
-	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+	private static MessagePane single_instance;
+
+	public MessagePane() throws IOException {
+	    setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 		this.setPadding(new Insets(5, 5, 5, 5));
         this.setVgap(5);
         this.setHgap(5);
-        
+
 		testButton = new Button("Evaluate");
 		l = new Text();
 		this.showEvaluation();
-		testButton.setOnAction(new startTest());
+		add(l, 0,0,1,1);
 		add(testButton, 0,1,1,1);
 		setHalignment(testButton, HPos.CENTER);
 	}
 
-	class startTest implements EventHandler<ActionEvent>{
-		@Override
-		public void handle(ActionEvent event) {
-			//pagina openen waar vragen kunne gesteld worden
-			controller.resetQuestionNumber();
-			Stage stage = new Stage();
-			TestPane testPane = new TestPane(controller);
-			Scene scene = new Scene(testPane, 500, 250);
-			controller.newTest(); // zo wordt score bijgehouden aan begin van test denk ik
-			add(l, 0,0,1,1);
-			stage.setScene(scene);
-			stage.show();
-			testPane.setProcessAnswerAction(new processAnswerHandler(testPane, stage));
+	public static MessagePane getInstance() throws IOException{
+		if(single_instance == null){
+			synchronized (MessagePane.class){
+				if(single_instance == null){
+					single_instance = new MessagePane();
+				}
+			}
 		}
+		return single_instance;
 	}
+
+	public void setStartAction(EventHandler<ActionEvent> startAction){
+		testButton.setOnAction(startAction);
+	}
+
 
 	public void showEvaluation() throws IOException {
 		if (controller.getEvaluation().getPropertyValue("test").equals("false")) {
@@ -64,7 +65,9 @@ public class MessagePane extends GridPane {
 		if (controller.getEvaluation().getPropertyValue("test").equals("true")) {
 			l.setText("You already did this Test!");
 		}
+		System.out.println(controller.getQuestions().size() + " - " + controller.getQuestionNumber());
 		if (controller.getQuestions().size() > 0 && controller.getQuestionNumber() == controller.getQuestions().size()) {
+			System.out.println("halloooo");
 			if (controller.getEvaluation().getPropertyValue("evaluation.mode").equals("score")) {
 				l.setText(controller.getScoreFeedback().toString());
 				controller.getEvaluation().setProperty("evaluation.mode", "score");

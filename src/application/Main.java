@@ -1,6 +1,7 @@
 package application;
 
 import controller.Controller;
+import handler.startTestHandler;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -17,28 +18,29 @@ import view.panels.QuestionOverviewPane;
 import view.panels.TestPane;
 
 public class Main extends Application {
+	QuestionOverviewPane questionOverviewPane;
+	CategoryOverviewPane categoryOverviewPane;
+	MessagePane messagePane;
+
 	@Override
 	public void start(Stage primaryStage) {
 
 		Controller controller = Controller.getInstance();
 
 		try {
-			QuestionOverviewPane questionOverviewPane = new QuestionOverviewPane();
-			QuestionDetailPane questionDetailPane = new QuestionDetailPane();
+			questionOverviewPane = new QuestionOverviewPane();
+			categoryOverviewPane = new CategoryOverviewPane();
+			messagePane = MessagePane.getInstance();
 
-			CategoryOverviewPane categoryOverviewPanel = new CategoryOverviewPane();
-			CategoryDetailPane categoryDetailPanel = new CategoryDetailPane();
-
-			TestPane testPane = new TestPane(controller);
-			MessagePane messagePane = new MessagePane();
+			messagePane.setStartAction(new startTestHandler());
 
 			controller.getService().addObserver(questionOverviewPane);
-			controller.getService().addObserver(categoryOverviewPanel);
+			controller.getService().addObserver(categoryOverviewPane);
 
 			Group root = new Group();
 			Scene scene = new Scene(root, 750, 400);
 
-			BorderPane borderPane = new AssesMainPane(messagePane, categoryOverviewPanel, questionOverviewPane);
+			BorderPane borderPane = new AssesMainPane(messagePane, categoryOverviewPane, questionOverviewPane);
 			borderPane.prefHeightProperty().bind(scene.heightProperty());
 			borderPane.prefWidthProperty().bind(scene.widthProperty());
 

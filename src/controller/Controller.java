@@ -3,7 +3,9 @@ package controller;
 import javafx.collections.ObservableList;
 import model.domain.*;
 import model.facade.Service;
+import view.panels.MessagePane;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Controller implements Observer {
@@ -95,6 +97,13 @@ public class Controller implements Observer {
 
     @Override
     public void update() {
-
+        if(testKlaar){
+            try{
+                this.testKlaar = false;
+                MessagePane.getInstance().showEvaluation();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
     }
 }

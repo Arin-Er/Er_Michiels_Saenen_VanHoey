@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 import controller.Controller;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -47,7 +49,11 @@ public class TestPane extends GridPane {
         add(questionField, 0, 0, 1,1);
 
         statementGroup = new ToggleGroup();
-		for(CharSequence s : controller.getQuestion(questionField.getText()).getAnswers()){
+
+		ArrayList<String> answers = getAnswersAsList(controller.getQuestion(questionField.getText()).getAnswers());
+
+        Collections.shuffle(answers);
+		for(CharSequence s : answers){
 			RadioButton rb = new RadioButton(s.toString());
 			rb.setUserData(s.toString());
 			rb.setToggleGroup(statementGroup);
@@ -59,29 +65,14 @@ public class TestPane extends GridPane {
 		add(submitButton, 0, 1+ counter, 1, 1);
 	}
 
-	public void setItems(){
-		//get Random question
-		int random = getRandomNumberInRange(0, questionsToAsk.size() - 1);
-		Question question = questionsToAsk.get(random);
-		//shuffle answers
-		Collections.shuffle(question.getAnswers());
-		//show question on screen
-		questionField = new Label(question.getQuestion());
-		add(questionField, 0, 0, 1 ,1);
-		//show answer options
-		statementGroup = new ToggleGroup();
-		for(CharSequence s : question.getAnswers()){
-			//new RadioButton with value from answers
-			RadioButton rb = new RadioButton(s.toString());
-			rb.setUserData(s.toString());
-			rb.setToggleGroup(statementGroup);
-			add(rb, 0, 1 + counter, 1, 1);
-			counter += 1; // counter added so answers arent on top of eachother
+	public ArrayList<String> getAnswersAsList(ObservableList<CharSequence> list){
+		ArrayList<String> answers = new ArrayList<String>();
+
+		for(CharSequence s : list){
+			answers.add(s.toString());
 		}
 
-
-		submitButton = new Button("Submit");
-		add(submitButton, 0, 1 + counter,1, 1 );
+		return answers;
 	}
 
 
